@@ -59,13 +59,13 @@ macro_rules! LOG_PREFIX {
 
 macro_rules! log_to_console {
     ($fmt:literal, $($arg:tt)*) => {
-        print!(LOG_PREFIX!());
-        println!($fmt, $($arg)*);
-        let _ = io::stdout().flush();
+        eprint!(LOG_PREFIX!());
+        eprintln!($fmt, $($arg)*);
+        let _ = io::stderr().flush();
     };
     ($fmt:literal) => {
-        print!(LOG_PREFIX!());
-        println!($fmt);
+        eprint!(LOG_PREFIX!());
+        eprintln!($fmt);
         let _ = io::stdout().flush();
     }
 }
@@ -1339,12 +1339,12 @@ impl Server {
             .filter_map(|p| Url::parse(&format!("file://{}", p)).ok())
             .collect();
 
-        println!();
+        eprintln!();
         log_to_console!("search paths:");
         for lib in &libs {
             log_to_console!("{lib}");
         }
-        println!();
+        eprintln!();
         libs
     }
 
